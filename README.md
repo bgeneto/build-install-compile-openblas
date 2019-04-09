@@ -66,12 +66,14 @@ export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-lo
 export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -march=native"
 ```
 
-## 4. Compiling and linking with openblas
+## 4. Compiling and linking with openblas. Using your openblas library
 
-required linker options: -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas
-compiler options with openmp: -I/opt/openblas/include -pthread -fopenmp  
+Required linker options: 
+```-L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas```
+Required compiler options with openmp: 
+```-I/opt/openblas/include -pthread -fopenmp```
 
-Example (using openmp version): 
+Compilation example (using openmp version): 
 
 ```
 gfortran -I/opt/openblas/include -pthread -fopenmp -O3 -Wall example.f90 -o example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas
