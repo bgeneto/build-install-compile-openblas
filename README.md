@@ -88,7 +88,7 @@ gfortran -I/opt/openblas/include -pthread -fopenmp -O3 -Wall example.f90 -o exam
 gcc compilation example (threaded version, not openmp) using full library path:
 
 ```
-gcc -I/opt/openblas/include -pthread -O3 -Wall example.c -o ~/bin/example -L/opt/openblas/lib -lm -lpthread -lgfortran /opt/openblas/lib/libopenblas.a
+gcc -I/opt/openblas/include -pthread -O3 -Wall example.c -o ~/bin/example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas
 ```
 
 Environment variables are used to specify a maximum number of threads. For example,
