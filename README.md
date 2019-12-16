@@ -95,6 +95,7 @@ Compilation example (using openmp version):
 
 ```
 ulimit -s unlimited
+export MAX_THREADS=4
 gfortran -I/opt/openblas/include -pthread -fopenmp -O3 -funroll-all-loops -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -floop-parallelize-all \
 -ftree-parallelize-loops=$MAX_THREADS -m64 -Wall example.f90 -o example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas_openmp
 ```
@@ -108,6 +109,7 @@ gcc -I/opt/openblas/include -pthread -O3 -Wall example.c -o ~/bin/example -L/opt
 Environment variables are used to specify a maximum number of threads. For example,
 
 ```
+export MAX_THREADS=4
 export OPENBLAS_NUM_THREADS=4
 export GOTO_NUM_THREADS=4
 export OMP_NUM_THREADS=4
