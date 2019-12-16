@@ -34,7 +34,7 @@ Now you have to decide wich version of openblas you need/want: non-threaded (seq
 ```
 cd $HOME/OpenBLAS
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
-  NO_AFFINITY=1 NO_WARMUP=1 USE_OPENMP=0 USE_THREAD=0 LIBNAMESUFFIX=nonthreaded
+  NO_AFFINITY=1 NO_WARMUP=1 USE_OPENMP=0 USE_THREAD=0 USE_LOCKING=1 LIBNAMESUFFIX=nonthreaded
 make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=nonthreaded install
 ```
 
@@ -43,28 +43,40 @@ make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=nonthreaded install
 
 ```
 cd $HOME/OpenBLAS
-make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
-  NO_AFFINITY=1 NO_WARMUP=1 USE_OPENMP=0 USE_THREAD=1 NUM_THREADS=64
-make PREFIX=$OPENBLAS_DIR install
+export USE_THREAD=1
+export NUM_THREADS=64
+export DYNAMIC_ARCH=0
+export NO_AFFINITY=1
+export NO_WARMUP=1
+export BUILD_RELAPACK=0
+export COMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export CFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 LIBNAMESUFFIX=threaded \
+sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=threaded install
 ```
 
 #### 3.4. Build and install openblas openmp version
 
 ```
 cd $HOME/OpenBLAS
-make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 BUILD_RELAPACK=1 NO_AFFINITY=1 NO_WARMUP=1 \
-  USE_OPENMP=1 NUM_THREADS=64 LIBNAMESUFFIX=openmp
-make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=openmp install
+export USE_THREAD=1
+export NUM_THREADS=64
+export DYNAMIC_ARCH=0
+export NO_AFFINITY=1
+export NO_WARMUP=1
+export BUILD_RELAPACK=0
+export COMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export CFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
+  USE_OPENMP=1 LIBNAMESUFFIX=openmp
+sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=openmp install
 ```
 
-If you want some more aggressive optimizations, issue the following commands BEFORE making the library: 
-
-```
-export COMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -march=native"
-export CFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -march=native"
-export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -march=native"
-export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -march=native"
-```
+PS.: do NOT use -march=native or BUILD_RELAPACK=1 (too many errors!)
 
 ## 4. Compiling and linking with openblas. Using your openblas library
 
@@ -82,10 +94,12 @@ Required compiler options for openmp execution:
 Compilation example (using openmp version): 
 
 ```
-gfortran -I/opt/openblas/include -pthread -fopenmp -O3 -Wall example.f90 -o example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas
+ulimit -s unlimited
+gfortran -I/opt/openblas/include -pthread -fopenmp -O3 -funroll-all-loops -fexpensive-optimizations -ftree-vectorize -fprefetch-loop-arrays -floop-parallelize-all \
+-ftree-parallelize-loops=$MAX_THREADS -m64 -Wall example.f90 -o example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas_openmp
 ```
 
-gcc compilation example (threaded version, not openmp) using full library path:
+gcc compilation example (threaded version, not openmp):
 
 ```
 gcc -I/opt/openblas/include -pthread -O3 -Wall example.c -o ~/bin/example -L/opt/openblas/lib -lm -lpthread -lgfortran -lopenblas
