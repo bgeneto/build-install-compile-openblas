@@ -48,10 +48,10 @@ export NUM_THREADS=64
 export DYNAMIC_ARCH=0
 export NO_WARMUP=1
 export BUILD_RELAPACK=0
-export COMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export CFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCOMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export COMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export CFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export FCOMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export FCFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 LIBNAMESUFFIX=threaded \
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=threaded install
 ```
@@ -65,16 +65,16 @@ export NUM_THREADS=64
 export DYNAMIC_ARCH=0
 export NO_WARMUP=1
 export BUILD_RELAPACK=0
-export COMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export CFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCOMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export COMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export CFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export FCOMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export FCFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
   USE_OPENMP=1 LIBNAMESUFFIX=openmp
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=openmp install
 ```
 
-PS.: do NOT use -march=native or BUILD_RELAPACK=1 (too many errors!)
+PS.: do NOT use -march=native or BUILD_RELAPACK=1 (too many errors in tests: make -j lapack-test)
 
 ## 4. Compiling and linking with openblas. Using your openblas library
 
