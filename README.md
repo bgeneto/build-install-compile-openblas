@@ -46,13 +46,12 @@ cd $HOME/OpenBLAS
 export USE_THREAD=1
 export NUM_THREADS=64
 export DYNAMIC_ARCH=0
-export NO_AFFINITY=1
 export NO_WARMUP=1
 export BUILD_RELAPACK=0
-export COMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export CFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export COMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export CFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCOMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 LIBNAMESUFFIX=threaded \
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=threaded install
 ```
@@ -64,13 +63,12 @@ cd $HOME/OpenBLAS
 export USE_THREAD=1
 export NUM_THREADS=64
 export DYNAMIC_ARCH=0
-export NO_AFFINITY=1
 export NO_WARMUP=1
 export BUILD_RELAPACK=0
-export COMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export CFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCOMMON_OPT="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
-export FCFLAGS="-O3 -fexpensive-optimizations -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export COMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export CFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCOMMON_OPT="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
+export FCFLAGS="-O3 -ftree-vectorize -funroll-all-loops -fprefetch-loop-arrays"
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
   USE_OPENMP=1 LIBNAMESUFFIX=openmp
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=openmp install
