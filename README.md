@@ -108,9 +108,12 @@ Environment variables are used to specify a maximum number of threads. For examp
 
 ```
 export MAX_THREADS=4
-export OPENBLAS_NUM_THREADS=4
-export GOTO_NUM_THREADS=4
-export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=$MAX_THREADS
+export GOTO_NUM_THREADS=$MAX_THREADS
+export OMP_NUM_THREADS=$MAX_THREADS
+export MKL_NUM_THREADS=$MAX_THREADS
+export BLIS_NUM_THREADS=$MAX_THREADS
+
 ```
 
 ##
