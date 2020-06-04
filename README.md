@@ -1,21 +1,19 @@
 ## 0. Purpose 
 
 This document contains step-by-step instructions to proceed with a (hopefully) successful build and installation of the openblas (optimized BLAS and LAPACK) library. 
-Tested with Ubuntu 18.04 LTS.
+Tested with Ubuntu 18.04 LTS and 20.04 LTS.
 
 ## 1. Install prerequisite software
 
-*Note: We assume you are running all the commands below with elevated privileges by doing something like `sudo su`.*
-
 ```
-apt install build-essential g++ gfortran git -y
+sudo apt install build-essential g++ gfortran git -y
 ```
 
 ## 2. Create installation directory
 
 ```
 OPENBLAS_DIR=/opt/openblas
-mkdir $OPENBLAS_DIR
+sudo mkdir $OPENBLAS_DIR
 ```
 
 ## 3. Build and install openblas library from source
@@ -35,11 +33,10 @@ Now you have to decide wich version of openblas you need/want: non-threaded (seq
 cd $HOME/OpenBLAS
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
   NO_AFFINITY=1 NO_WARMUP=1 USE_OPENMP=0 USE_THREAD=0 USE_LOCKING=1 LIBNAMESUFFIX=nonthreaded
-make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=nonthreaded install
+sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=nonthreaded install
 ```
 
 #### 3.3. Build and install openblas threaded version
-
 
 ```
 cd $HOME/OpenBLAS
@@ -74,9 +71,18 @@ make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 \
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=openmp install
 ```
 
-PS.: do NOT use -march=native or BUILD_RELAPACK=1 (too many errors in tests: make -j lapack-test)
+PS.: do NOT use -march=native or BUILD_RELAPACK=1 (gives too many errors in tests: make -j lapack-test)
 
-## 4. Compiling and linking with openblas. Using your openblas library
+## 4. Testing
+
+Ideally you should test before install :-)
+
+```
+make -j lapack-test
+cd ./lapack-netlib; python3 ./lapack_testing.py -r -b TESTING
+```
+
+## 5. Compiling and linking with openblas. Using your openblas library
 
 Required linker options: 
 ```
