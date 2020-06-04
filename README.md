@@ -82,6 +82,20 @@ make -j lapack-test
 cd ./lapack-netlib; python3 ./lapack_testing.py -r -b TESTING
 ```
 
+Example of an acceptable output:
+
+```
+ -->   LAPACK TESTING SUMMARY  <--
+SUMMARY                 nb test run     numerical error         other error
+================        ===========     =================       ================
+REAL                    1298655         3       (0.000%)        0       (0.000%)
+DOUBLE PRECISION        1309007         0       (0.000%)        0       (0.000%)
+COMPLEX                 768366          0       (0.000%)        0       (0.000%)
+COMPLEX16               769178          0       (0.000%)        0       (0.000%)
+
+--> ALL PRECISIONS      4145206         3       (0.000%)        0       (0.000%)
+```
+
 ## 5. Compiling and linking with openblas. Using your openblas library
 
 Required linker options: 
