@@ -45,10 +45,10 @@ export NUM_THREADS=64
 export DYNAMIC_ARCH=0
 export NO_WARMUP=1
 export BUILD_RELAPACK=0
-export COMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
-export CFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
-export FCOMMON_OPT="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
-export FCFLAGS="-O3 -ftree-vectorize -fprefetch-loop-arrays --param prefetch-latency=300"
+export COMMON_OPT="-O2"
+export CFLAGS="-O2"
+export FCOMMON_OPT="-O2"
+export FCFLAGS="-O2"
 make -j DYNAMIC_ARCH=0 CC=gcc FC=gfortran HOSTCC=gcc BINARY=64 INTERFACE=64 LIBNAMESUFFIX=threaded \
 sudo make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=threaded install
 ```
