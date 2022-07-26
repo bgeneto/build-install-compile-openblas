@@ -96,7 +96,20 @@ COMPLEX16               769178          0       (0.000%)        0       (0.000%)
 --> ALL PRECISIONS      4145206         3       (0.000%)        0       (0.000%)
 ```
 
-## 5. Compiling and linking with openblas. Using your openblas library
+## 5. Installing 
+
+`sudo make install`
+
+Add the following env variables to your `~/.bashrc` or `~/.zshrc` file:
+
+```
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:/opt/OpenBLAS/include
+export CPATH=$CPATH:/opt/OpenBLAS/include
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/OpenBLAS/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/OpenBLAS/lib
+```
+
+## 6. Compiling and linking with openblas. Using your openblas library
 
 Required linker options: 
 ```
